@@ -17,7 +17,7 @@ de pacientes. Proyecto final de Programación I, Universidad CES.
    corrección visual.
 6. Salir.
 
-El menú se repite hasta que el usuario elige la opción 6 y los datos de las personas nuevas que se registren se guardan de forma permanente en `el archivo json.
+El menú se repite hasta que el usuario elige la opción 6 y los datos de las personas nuevas que se registren se guardan de forma permanente en el archivo json.
 
 #Archivos
 - main.py: código fuente del programa.
