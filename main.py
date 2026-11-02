@@ -1,0 +1,194 @@
+import json
+ruta = 'pacientes.json'
+
+def cargar_pacientes(ruta):
+    with open(ruta, 'r') as archivo:
+        datos = json.load(archivo)
+    return datos
+
+def guardar_pacientes(ruta, lista):
+    with open(ruta, 'w') as archivo:
+        json.dump(lista, archivo, indent=4)
+
+
+def menu():
+    print('=========================================')
+    print('           SISTEMA OPTOGESTIÓN')
+    print('=========================================')
+    print('1. Registrar paciente')
+    print('2. Consultar paciente')
+    print('3. Mostrar pacientes registrados')
+    print('4. Buscar pacientes con corrección visual')
+    print('5. Generar estadísticas')
+    print('6. Salir')
+
+
+
+def pedir_edad():
+    while True:
+        texto = input('Edad (1 a 120): ')
+        if texto.isdigit():
+            edad = int(texto)
+            if edad >= 1 and edad <= 120:
+                return edad
+            else:
+                print('La edad debe estar entre 1 y 120')
+        else:
+            print('Ingrese solo números')
+
+
+def pedir_sexo():
+    while True:
+        sexo = input('Sexo (F/M): ').upper()
+        if sexo == 'F' or sexo == 'M':
+            return sexo
+        else:
+            print('Ingrese F o M')
+
+
+def correccion():
+    while True:
+        respuesta = input('¿Usa corrección visual? (True/False): ')
+        if respuesta == 'True':
+            return True
+        elif respuesta == 'False':
+            return False
+        else:
+            print('Solo se admite True o False')
+
+
+def id_existe(pacientes, id_buscado):
+    for paciente in pacientes:
+        if paciente['id'] == id_buscado:
+            return True
+    return False
+
+
+
+
+def registrar_paciente(pacientes):
+    print('--- Registrar paciente ---')
+
+    while True:
+        id_paciente = input('Id (ejemplo: P006): ').upper()
+        if id_paciente == '':
+            print('El id no puede estar vacío')
+        elif id_existe(pacientes, id_paciente):
+            print('Ese id ya existe, intente con otro')
+        else:
+            break
+
+
+    while True:
+        nombre = input('Nombre completo: ')
+        if nombre == '':
+            print('El nombre no puede estar vacío')
+        else:
+            break
+
+
+    edad = pedir_edad()
+    sexo = pedir_sexo()
+    usa_correccion = correccion()
+
+    nuevo_paciente = {
+        'id': id_paciente,
+        'nombre': nombre,
+        'edad': edad,
+        'sexo': sexo,
+        'usa_correccion': usa_correccion
+    }
+
+    pacientes.append(nuevo_paciente)
+    guardar_pacientes(ruta, pacientes)
+    print('Paciente registrado y guardado correctamente')
+
+
+
+
+def consultar_paciente(pacientes):
+    id_buscado = input('Ingrese el id del paciente: ').upper()
+    for paciente in pacientes:
+        if paciente['id'] == id_buscado:
+            print('--- Paciente encontrado ---')
+            for clave, valor in paciente.items():
+                print(clave, ':', valor)
+            return
+    print('No existe un paciente con ese id')
+
+
+
+
+def mostrar_pacientes(pacientes):
+    if len(pacientes) == 0:
+        print('No hay pacientes registrados')
+    else:
+        print('--- Pacientes registrados ---')
+        for paciente in pacientes:
+            print(paciente['nombre'])
+
+
+
+
+def buscar_con_correccion(pacientes):
+    contador = 0
+    print('--- Pacientes con corrección visual ---')
+    for paciente in pacientes:
+        if paciente['usa_correccion'] == True:
+            print(paciente['nombre'])
+            contador += 1
+    if contador == 0:
+        print('Ningún paciente usa corrección visual')
+
+
+
+
+def generar_estadisticas(pacientes):
+    total = len(pacientes)
+
+    if total == 0:
+        print('No hay pacientes registrados, no se pueden calcular estadísticas')
+    else:
+        suma_edades = 0
+        con_correccion = 0
+        for paciente in pacientes:
+            suma_edades += paciente['edad']
+            if paciente['usa_correccion'] == True:
+                con_correccion += 1
+
+        promedio = round(suma_edades / total, 2)
+
+        print('--- Estadísticas de la jornada ---')
+        print(f'Total de pacientes: {total}')
+        print(f'Edad promedio: {promedio}')
+        print(f'Pacientes que usan corrección visual: {con_correccion}')
+
+
+
+
+
+pacientes = []
+pacientes = cargar_pacientes(ruta)
+
+while True:
+    menu()
+    opcion = input('Seleccione una opción: ')
+    print('\n')
+
+    if opcion == '1':
+        registrar_paciente(pacientes)
+    elif opcion == '2':
+        consultar_paciente(pacientes)
+    elif opcion == '3':
+        mostrar_pacientes(pacientes)
+    elif opcion == '4':
+        buscar_con_correccion(pacientes)
+    elif opcion == '5':
+        generar_estadisticas(pacientes)
+    elif opcion == '6':
+        print('Gracias por usar el sistema de optogestion. Hasta luego')
+        break
+    else:
+        print('Opción no válida, intente de nuevo')
+
+    print('\n')

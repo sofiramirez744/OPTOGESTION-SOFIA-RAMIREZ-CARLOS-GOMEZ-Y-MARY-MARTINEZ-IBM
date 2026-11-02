@@ -1,0 +1,37 @@
+[
+    {
+        "id": "P001",
+        "nombre": "Nelly Herrera",
+        "edad": 52,
+        "sexo": "F",
+        "usa_correccion": true
+    },
+    {
+        "id": "P002",
+        "nombre": "Felipe Rodriguez",
+        "edad": 22,
+        "sexo": "M",
+        "usa_correccion": true
+    },
+    {
+        "id": "P003",
+        "nombre": "Mariana Lopez",
+        "edad": 38,
+        "sexo": "F",
+        "usa_correccion": false
+    },
+    {
+        "id": "P004",
+        "nombre": "Andres Perez",
+        "edad": 12,
+        "sexo": "M",
+        "usa_correccion": false
+    },
+    {
+        "id": "P005",
+        "nombre": "Rosa Martinez",
+        "edad": 67,
+        "sexo": "F",
+        "usa_correccion": true
+    }
+]
